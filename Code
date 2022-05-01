@@ -1,0 +1,56 @@
+int LED = D7;
+
+//setting up functions
+void LEDblink(const char *event, const char *data);
+void wave();
+void pat();
+
+
+void setup() {
+    pinMode(LED, OUTPUT);
+    Particle.subscribe("3.3D", LEDblink);
+}
+
+void loop() {
+
+}
+
+void LEDblink(const char *event, const char *data)
+{
+    if(strcmp(data,"wave") == 0)
+    {
+        wave();
+        Particle.publish("recieved", "wave");
+    }
+    else if(strcmp(data,"pat") == 0)
+    {
+        pat();
+        Particle.publish("recieved", "pat");
+    }
+}
+
+//wave blinks LED 3 times
+void wave()
+{
+    digitalWrite(LED,HIGH);
+    delay(1000);
+    digitalWrite(LED,LOW);
+    delay(1000);
+    digitalWrite(LED,HIGH);
+    delay(1000);
+    digitalWrite(LED,LOW);
+    delay(1000);
+    digitalWrite(LED,HIGH);
+    delay(1000);
+    digitalWrite(LED,LOW);
+    delay(1000);
+}
+
+//pat blinks LED once
+void pat()
+{
+    digitalWrite(LED,HIGH);
+    delay(1000);
+    digitalWrite(LED,LOW);
+    delay(1000);
+}
